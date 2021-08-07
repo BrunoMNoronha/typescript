@@ -9,7 +9,6 @@ export abstract class View<T> {
       throw Error(`Seletor ${selector} não existe no DOM`);
     }
     scape ? scape : false;
-    console.log(scape);
   }
 
   public update(model: T): void {
