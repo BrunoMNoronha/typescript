@@ -1,8 +1,13 @@
 export abstract class View<T> {
-  protected _element: HTMLLIElement;
+  protected _element: HTMLElement;
   private scape = false;
   constructor(selector: string, scape?: boolean) {
-    this._element = document.querySelector(selector);
+    const element = document.querySelector(selector);
+    if (element) {
+      this._element = element as HTMLElement;
+    } else {
+      throw Error(`Seletor ${selector} não existe no DOM`);
+    }
     scape ? scape : false;
     console.log(scape);
   }
