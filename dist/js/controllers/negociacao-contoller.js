@@ -15,10 +15,8 @@ export class NegociacaoController {
     adiciona() {
         const negociacao = this._criaNegociação();
         this._negociacoes.adiciona(negociacao);
-        this._negociacoesView.update(this._negociacoes);
-        this._mensagemView.update("Negociação adicionada com sucesso");
+        this._atualizaView();
         this._limparFormulario();
-        this._inputData.focus();
     }
     _criaNegociação() {
         const exp = /-/g;
@@ -31,5 +29,10 @@ export class NegociacaoController {
         this._inputData.value = "";
         this._inputQuantidade.value = "";
         this._inputValor.value = "";
+        this._inputData.focus();
+    }
+    _atualizaView() {
+        this._negociacoesView.update(this._negociacoes);
+        this._mensagemView.update("Negociação adicionada com sucesso");
     }
 }
