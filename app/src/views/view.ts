@@ -1,5 +1,3 @@
-import { inspect } from "../decorators/inspect.js";
-
 export abstract class View<T> {
   protected _element: HTMLElement;
   constructor(selector: string) {
