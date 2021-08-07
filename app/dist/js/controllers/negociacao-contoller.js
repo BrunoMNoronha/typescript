@@ -30,6 +30,21 @@ export class NegociacaoController {
             this._mensagemView.update("Apenas negociaçõle sem dias úteis são aceitas");
         }
     }
+    importarDados() {
+        fetch("http://localhost:8080/dados")
+            .then((response) => response.json())
+            .then((dados) => {
+            return dados.map((dado) => {
+                return new Negociacao(new Date(), dado.vezes, dado.montante);
+            });
+        })
+            .then((negociacoesDados) => {
+            for (let negociacao of negociacoesDados) {
+                this._negociacoes.adiciona(negociacao);
+            }
+            this._negociacoesView.update(this._negociacoes);
+        });
+    }
     _isDiaUtil(date) {
         return (date.getDay() > DiasDaSemana.DOMINGO &&
             date.getDay() < DiasDaSemana.SABADO);
