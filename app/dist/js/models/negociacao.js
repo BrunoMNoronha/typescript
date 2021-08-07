@@ -4,6 +4,13 @@ export class Negociacao {
         this.quantidade = quantidade;
         this.valor = valor;
     }
+    static create(dataString, quantidadeString, valorString) {
+        const exp = /-/g;
+        const date = new Date(dataString.replace(exp, ","));
+        const quantidade = parseInt(quantidadeString);
+        const valor = parseInt(valorString);
+        return new Negociacao(date, quantidade, valor);
+    }
     get data() {
         const data = new Date(this._data.getTime());
         return data;
@@ -11,11 +18,16 @@ export class Negociacao {
     get volume() {
         return this.quantidade * this.valor;
     }
-    static create(dataString, quantidadeString, valorString) {
-        const exp = /-/g;
-        const date = new Date(dataString.replace(exp, ","));
-        const quantidade = parseInt(quantidadeString);
-        const valor = parseInt(valorString);
-        return new Negociacao(date, quantidade, valor);
+    toString() {
+        return `
+      Data: ${this.data},
+      Quantidade: ${this.quantidade},
+      Valor: ${this.valor}
+    `;
+    }
+    equals(negociacao) {
+        return (this.data.getDate() === negociacao.data.getDate() &&
+            this.data.getMonth() === negociacao.data.getMonth() &&
+            this.data.getFullYear() === negociacao.data.getFullYear());
     }
 }

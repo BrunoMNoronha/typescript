@@ -13,6 +13,7 @@ import { Negociacoes } from "../models/negociacoes.js";
 import { MensagemView } from "../views/mensagem-view.js";
 import { NegociacoesView } from "../views/negociacoes-view.js";
 import { Negociacao } from "./../models/negociacao.js";
+import { print } from "../utils/print.js";
 export class NegociacaoController {
     constructor() {
         this._negociacoes = new Negociacoes();
@@ -26,6 +27,7 @@ export class NegociacaoController {
         if (this._isDiaUtil(negociacao.data)) {
             this._negociacoes.adiciona(negociacao);
             this._atualizaView();
+            print(negociacao);
             this._limparFormulario();
         }
         else {
@@ -33,7 +35,16 @@ export class NegociacaoController {
         }
     }
     importarDados() {
-        this._negociacaoService.obterNegociacoes().then((negociacoesDados) => {
+        this._negociacaoService
+            .obterNegociacoes()
+            .then((negociacoesDados) => {
+            return negociacoesDados.filter((negociacoesDados) => {
+                return !this._negociacoes
+                    .lista()
+                    .some((negociacao) => negociacao.equals(negociacoesDados));
+            });
+        })
+            .then((negociacoesDados) => {
             for (let negociacao of negociacoesDados) {
                 this._negociacoes.adiciona(negociacao);
             }
