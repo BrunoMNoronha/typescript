@@ -9,3 +9,4 @@ const botaoImporta = document.querySelector("#botao-importar");
 botaoImporta === null || botaoImporta === void 0 ? void 0 : botaoImporta.addEventListener("click", () => {
     controller.importarDados();
 });
+//# sourceMappingURL=app.js.map
